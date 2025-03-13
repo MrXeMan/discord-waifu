@@ -1,14 +1,63 @@
-import utils
+import asyncio
+import os
+import threading
+import discord
+from discord.ext import commands
+
+from main import utils
+
+
+class CustomBot(commands.Bot):
+    def __init__(self, terminate_signal: threading.Event, ready, logger):
+        super().__init__(command_prefix=">>", intents=discord.Intents.all())
+        self.bg_task = None
+        self.terminate_signal = terminate_signal
+        self.ready = ready
+        self.logger = logger
+
+    async def setup_hook(self) -> None:
+        await self.load_extension("dsc.commands")
+        self.bg_task = self.loop.create_task(self.self_close())
+
+    async def on_ready(self):
+        print("Logged on as:", self.user)
+
+        guild_id = os.getenv("GUILD_ID")
+        self.tree.copy_global_to(guild=discord.Object(id=guild_id))
+        await self.tree.sync(guild=discord.Object(id=guild_id))
+
+        self.ready()
+
+    async def on_message(self, message: discord.Message):
+        if message.author == self.user:
+            return
+        print(
+            f"""New message:
+    Author: {message.author.display_name}
+    Channel: {message.channel.name}
+    Content: {message.content}
+""")
+        await self.process_commands(message)
+
+    async def self_close(self):
+        await self.wait_until_ready()
+        while not self.terminate_signal.is_set():
+            await asyncio.sleep(1)
+        await self.close()
 
 
 class Core(utils.Core):
-    async def call(self):
-        print("Starting Discord Waifu!")
-        await super().call()
+    def __init__(self, terminate_signal: threading.Event):
+        super().__init__(terminate_signal, "discord")
+        self.bot: CustomBot = CustomBot(terminate_signal, self.set, self.logger)
 
-    async def loop(self):
-        print("Looped Discord Waifu!")
+    async def call(self):
+        from dotenv import load_dotenv
+        load_dotenv()
+        bot_token = os.getenv("BOT_TOKEN")
+        await super().call()
+        await self.bot.start(token=bot_token)
 
     async def stay_alive(self):
         await super().stay_alive()
-        print("Stopped Discord Waifu!")
+        await self.bot.close()

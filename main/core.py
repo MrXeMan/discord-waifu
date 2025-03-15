@@ -16,9 +16,10 @@ from main.utils import Command, LogHandler
 
 
 """
+TODO: Make modules be seperate from everything so I can load and unload them dynamically
 TODO: Start implementing AI into this.
 TODO: Make communication between modules. IP:port? idk
-TODO: Fix discord logs to include bot stuff.
+TODO: Create tools for channel/category creation (later after making the AI?)
 """
 
 

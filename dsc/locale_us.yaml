@@ -1,0 +1,100 @@
+
+# CUSTOM
+no_channels_found: "no channels"
+no_categories_found: "no categories"
+
+# UTILS SECTION
+utils_exit_response: "Exit signal sent. Shutting down!"
+
+utils_list_logs_first_response: "Getting all the logs..."
+utils_list_logs_end_response: "Here are all the log files:%log_files%"
+
+utils_read_logs_first_response: "Reading provided log file: %log_file%"
+utils_read_logs_failed_response: "Failed to get log file. Most likely doesn't exist, otherwise contact Owner."
+utils_read_logs_end_response: "Here all the logs for %log_file%:"
+utils_read_logs_force_stop_response: "Stopped log reading."
+
+utils_clear_logs_first_response: "Deleting all logs..."
+utils_clear_logs_end_response: "All logs have been successfully deleted."
+
+utils_enable_overwrite_first_response: "
+CAUTION!\n
+This will enable the bot to interact with every channel, category, roles etc.\n
+DON'T USE IF YOU ARE NOT A PROFESSIONAL.\n
+React to this message in %timer% seconds to confirm.\n
+\n
+You have been warned!"
+utils_enable_overwrite_success_response: "
+Overwrite has been enabled, bot has been granted every permission.\n
+To disable overwrite use \"/%name% disable_overwrite\"!"
+utils_enable_overwrite_failed_response: "
+No reaction detected after %timer% seconds.\n
+Overwrite has not been enabled."
+
+utils_disable_overwrite_response: "Disabled the overwrite!"
+
+
+# CHANNELS SECTION
+channels_list_first_response: "Listing all accessable channels..."
+channels_list_success_response: "
+Text channels: %text_channels%\n
+Voice channels: %voice_channels%\n
+Other channels: %other_channels%\n
+-# Bot will automatically reply only on these channels. Bot will only respond to commands on other channels.\n
+-# If you want bot to respond elsewhere too, add it's role to the channel with \"View channel\" permission."
+channels_list_role_fail: "Can't list the channels."
+
+channels_add_first_response: "Editing permission for the channel..."
+channels_add_success_response: "
+Edited the permission for the channel.\n
+-# You can check using %name% list"
+channels_add_role_fail: "Can't edit the channel."
+
+channels_remove_first_response: "Editing permission for the channel..."
+channels_remove_success_response: "
+Edited the permission for the channel.\n
+-# You can check using \"/%name% list\""
+channels_remove_role_fail: "Can't edit the channel."
+
+channels_create_first_response: "
+Creating channel:\n
+- Name: %channel_name%\n
+- Type: %channel_type%\n
+- Category: %category_name%"
+channels_create_category_failed: "
+Couldn't create the channel because bot doesn't have access to provided category.\n
+To allow access, add \"View Channel\" permission to the category.\n
+-# Use command \"/%name% list\" to list all categories with access."
+channels_create_channel_exists: "Couldn't create the channel because it already exists!"
+channels_create_success_response: "Successfully created channel: %channel_url%"
+channels_create_role_fail: "Can't create the channel."
+
+channels_delete_first_response: "
+Deleting channel:\n
+- Name: %channel_url%\n
+- Category: %category_name%"
+channels_delete_category_failed: "
+Channel couldn't be deleted because bot doesn't have access to channel or category.\n
+To grant access, give \"View Channel\" permission to both category and channel."
+channels_delete_success_response: "Channel has been successfully deleted!"
+channels_delete_role_fail: "Can't delete the channel."
+
+
+# CATEGORIES SECTION
+categories_list_first_response: "Listing all accessable categories..."
+categories_list_success_response: "
+Categories: %categories%\n
+-# By giving categories \"View channel\" permission for bot's role, you allow it to create channels there."
+categories_list_role_fail: ""
+
+categories_add_first_response: "Editing permission for the category..."
+categories_add_success_response: "
+Edited the permission for the category.\n
+-# You can check using \"/%name% list\""
+categories_add_role_fail: "Can't add the category."
+
+categories_remove_first_response: "Editing permission for the category..."
+categories_remove_success_response: "
+Edited the permission for the category.\n
+-# You can check using \"/%name%\" list"
+categories_remove_role_fail: "Can't remove the category."

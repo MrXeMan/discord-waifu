@@ -1,5 +1,6 @@
 import asyncio
 import importlib.util
+import inspect
 import logging
 import os.path
 import shutil
@@ -9,6 +10,8 @@ import time
 import tracemalloc
 import uuid
 from datetime import datetime
+
+import yaml
 
 from main.exceptions import *
 
@@ -64,7 +67,7 @@ class CustomFormatter(logging.Formatter):
 
 
 class Core(threading.Thread):
-    def __init__(self, terminate_signal: threading.Event, name: str, loop_enabled: bool = True, mode: str = None):
+    def __init__(self, terminate_signal: threading.Event, name: str, loop_enabled: bool = True, mode: str = None, logger_name: str = str(uuid.uuid4())):
         """
         Common core for all the modules inside this program. This function is supposed to be overwritten by creating a subclass.
         It has 3 main functions to overwrite with passing to the super class: call, loop, stay_alive.
@@ -87,7 +90,7 @@ class Core(threading.Thread):
         self.__ready: threading.Event = threading.Event()
         self.__logs_folder: str = f".logs/{self.core_name}"
         self.__log_handler: LogHandler = None
-        self.__init_logs__(mode if mode is not None else "w")
+        self.__init_logs__(mode if mode is not None else "w", logger_name)
         tracemalloc.start()
         self.logger.log(logging.INFO, "Module has been initialized.")
         self.logger.log(logging.DEBUG, f"Parameters:")
@@ -162,9 +165,7 @@ class Core(threading.Thread):
         while not self.is_set():
             await asyncio.sleep(1)
 
-
-
-    def __init_logs__(self, mode: str):
+    def __init_logs__(self, mode: str, logger_name):
         if self.core_name not in list_dir(".logs"):
             os.mkdir(self.__logs_folder)
         if "current.log" in list_dir(self.__logs_folder):
@@ -175,9 +176,31 @@ class Core(threading.Thread):
                 os.rename(f"{self.__logs_folder}/current.log",
                           f"{self.__logs_folder}/{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log")
         self.__log_handler = LogHandler(core_name=self.core_name, mode=mode)
-        self.logger = logging.getLogger(str(uuid.uuid4()))
+        self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(logging.DEBUG)
         self.logger.addHandler(self.__log_handler)
+
+    async def get_locale(self):
+        locale = os.path.join(os.path.dirname(os.path.realpath(inspect.getfile(self.__class__))), "locale_us.yaml")
+        if not os.path.exists(locale):
+            self.logger.log(logging.INFO, "Locale doesn't exists for this module.")
+            self.logger.log(logging.DEBUG, f"Locale path: {locale}")
+            self.logger.log(logging.DEBUG, f"Current directory: {os.curdir}")
+            return {}
+        with open(locale, "r") as file:
+            return yaml.safe_load(file)
+
+    async def get_string(self, target: str, **replaces):
+        try:
+            to_return = (await self.get_locale())[target]
+        except KeyError:
+            return "THIS SHOULD NOT HAPPEN! PLEASE CONTANT HELP FOR THIS BOT ON WHAT HAPPENED!"
+        if type(to_return) is not str:
+            return "THIS SHOULD NOT HAPPEN! PLEASE CONTANT HELP FOR THIS BOT ON WHAT HAPPENED!"
+        for to_replace in replaces.keys():
+            to_return = to_return.replace(f"%{to_replace}%", str(replaces[to_replace]))
+        to_return = to_return.replace("\n ", "\n")
+        return to_return
 
 
 class Cores(list):

@@ -2,6 +2,7 @@
 # CUSTOM
 no_channels_found: "no channels"
 no_categories_found: "no categories"
+no_extensions_found: "no extensions"
 
 # UTILS SECTION
 utils_exit_response: "Exit signal sent. Shutting down!"
@@ -16,6 +17,11 @@ utils_read_logs_force_stop_response: "Stopped log reading."
 
 utils_clear_logs_first_response: "Deleting all logs..."
 utils_clear_logs_end_response: "All logs have been successfully deleted."
+
+utils_stop_logs_first_response: "Stopping reading of logs..."
+utils_stop_logs_no_logs_read: "No logs are being read, stopping has no effect."
+utils_stop_logs_already_stopping: "Logs reading is already being stopped. Please wait..."
+utils_stop_logs_success_response: "Successfully stopped reading logs."
 
 utils_enable_overwrite_first_response: "
 CAUTION!\n
@@ -32,6 +38,12 @@ No reaction detected after %timer% seconds.\n
 Overwrite has not been enabled."
 
 utils_disable_overwrite_response: "Disabled the overwrite!"
+
+utils_request_first_response: "Trying to create a new request..."
+utils_request_success_response: "Successfully created a new request: %request%"
+utils_request_arguments_failed: "Arguments format is invalid. Use: argument_name=argument_value;argument_name2=argument_value2;[...]"
+utils_request_no_extension_found: "Couldn't create the request as provided extension: %extension% does not exist or isn't loaded."
+utils_request_request_response: "Here is request's response:\n %request%"
 
 
 # CHANNELS SECTION
@@ -98,3 +110,23 @@ categories_remove_success_response: "
 Edited the permission for the category.\n
 -# You can check using \"/%name%\" list"
 categories_remove_role_fail: "Can't remove the category."
+
+
+# EXTENSIONS SECTION
+extensions_list_loaded_first_response: "Listing all loaded extensions..."
+extensions_list_loaded_success_response: "List of all the loaded extensions: %extensions%"
+
+extensions_list_unloaded_first_response: "Listing all unloaded extensions..."
+extensions_list_unloaded_success_response: "List of all the unloaded extensions: %extensions%"
+
+extensions_unload_first_response: "Unloading the extension..."
+extensions_unload_success_response: "Successfully unloaded the extension!"
+extensions_unload_no_extension: "No extension by the name of %extension% found!"
+
+extensions_load_first_response: "Loading the extension..."
+extensions_load_success_response: "Successfully loaded the extension!"
+extensions_load_no_extension: "No extension by the name of %extension% found!"
+
+extensions_reload_first_response: "Reloading the extension..."
+extensions_reload_success_response: "Successfully reloading the extension!"
+extensions_reload_no_extension: "No extension by the name of %extension% found!"

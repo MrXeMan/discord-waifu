@@ -5,6 +5,8 @@ import discord
 from discord import app_commands, ChannelType
 from dotenv import load_dotenv
 
+import main.utils
+
 """
 --------------------------------
    CHECKS FOR ROLE PERMISSION
@@ -27,7 +29,7 @@ def channel_has_role(channel: discord.TextChannel | discord.VoiceChannel, role: 
 
 
 def channels_has_role(guild: discord.Guild, role: discord.Role) -> list[
-                      tuple[discord.TextChannel | discord.VoiceChannel | discord.ForumChannel | discord.StageChannel, str]]:
+    tuple[discord.TextChannel | discord.VoiceChannel | discord.ForumChannel | discord.StageChannel, str]]:
     """
     Checks for every channel in the guild if the provided role has access to it.
     :param guild: Guild to get channels from.
@@ -97,6 +99,28 @@ async def log_file_autocomplete(interaction: discord.Interaction, current: str) 
     return choices
 
 
+async def loaded_extension_autocomplete(interaction: discord.Interaction, current: str) -> list[
+    app_commands.Choice[str]]:
+    from main import global_variables
+    return [app_commands.Choice(name=extension.core_name, value=extension.core_name) for extension in
+            global_variables.threads
+            if current.lower() in extension.core_name.lower()]
+
+
+async def unloaded_extension_autocomplete(interaction: discord.Interaction, current: str) -> list[
+    app_commands.Choice[str]]:
+    extensions = []
+    for extension in os.listdir(os.path.join("extensions")):
+        ext = await main.utils.get_extension(extension)
+        if ext:
+            core: str = ext.core.Core.core_name
+            from main import global_variables
+            if core not in [exts.core_name for exts in global_variables.threads]:
+                extensions.append(core)
+    return [app_commands.Choice(name=extension, value=extension) for extension in extensions
+            if current.lower() in extension.lower()]
+
+
 """
 -----------------
     UTILITIES
@@ -121,6 +145,29 @@ def get_self_role_from_guild(guild: discord.Guild):
     """
     load_dotenv()
     return guild.get_role(int(os.getenv("ROLE_ID")))
+
+
+async def get_extension_from_folder(extension: str) -> tuple[str, str] | None:
+    for e in os.listdir(os.path.join("extensions")):
+        ext = await main.utils.get_extension(e)
+        if ext:
+            core: str = ext.core.Core.core_name
+            if core == extension:
+                return extension, e
+    return None
+
+
+"""
+----------------
+    CLASSES    
+----------------
+"""
+
+
+class Group(app_commands.Group):
+    def __init__(self, bot, *args, **kwargs):
+        self.bot = bot
+        super().__init__(*args, **kwargs)
 
 
 """

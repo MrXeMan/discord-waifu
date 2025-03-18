@@ -2,23 +2,25 @@ import asyncio
 import logging
 import os
 import threading
+
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
 
 from main import utils
 
 
 class Core(utils.Core):
+    core_name = "discord"
     class CustomBot(commands.Bot):
         def __init__(self, core: utils.Core):
             self.bg_task = None
             self.core = core
-            self.terminate_signal = core.terminate_signal
             self.logger = core.logger
             super().__init__(command_prefix=">>", intents=discord.Intents.all())
 
         async def setup_hook(self) -> None:
-            await self.load_extension("dsc.commands")
+            await self.load_extension(self.__module__.rsplit(".", maxsplit=1)[0]+".commands")
             self.bg_task = self.loop.create_task(self.self_close())
 
         async def on_ready(self):
@@ -43,15 +45,16 @@ class Core(utils.Core):
 
         async def self_close(self):
             await self.wait_until_ready()
-            while not self.terminate_signal.is_set():
+            while not self.core.killed():
                 await asyncio.sleep(1)
             await self.close()
 
-    def __init__(self, terminate_signal: threading.Event):
-        super().__init__(terminate_signal, "discord", logger_name="discord")
-        self.bot: Core.CustomBot = Core.CustomBot(self)
+    def __init__(self, terminate_signal: threading.Event, **kwargs):
+        super().__init__(terminate_signal, logger_name="discord",  **kwargs)
+        self.bot: Core.CustomBot = None
 
     async def call(self):
+        self.bot: Core.CustomBot = Core.CustomBot(self)
         from dotenv import load_dotenv
         load_dotenv()
         bot_token = os.getenv("BOT_TOKEN")
@@ -62,5 +65,3 @@ class Core(utils.Core):
         await super().stay_alive()
         await self.bot.close()
 
-    def get_locale(self):
-        return super().get_locale()

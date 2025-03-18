@@ -28,3 +28,8 @@ class DeletionFileNotExists(BaseException):
     """
     def __init__(self, message="File in the scheduler does not exist."):
         super().__init__(message)
+
+
+class IncompleteRequest(BaseException):
+    def __init__(self, message="There is an incomplete request!"):
+        super().__init__(message)

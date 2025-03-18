@@ -4,15 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="37972088-4791-441f-8fa0-c0cd3aaa04a0" name="Changes" comment="v0.1&#10;added more core modules like: discord, generation&#10;extended discord module&#10;added removal scheduler&#10;global variables now are stored in outside py file&#10;added loggers with log deletion ability&#10;added new exceptions&#10;changed structure a bit">
-      <change afterPath="$PROJECT_DIR$/dsc/locale_us.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dsc/utils.py" afterDir="false" />
+    <list default="true" id="37972088-4791-441f-8fa0-c0cd3aaa04a0" name="Changes" comment="v0.2&#10;Seperated commands by their category of usage&#10;Made core use locale language files&#10;String getting is seperated into a yaml file (dynamically reloaded)&#10;Seperated discord utilities to a new discord utils file (discord module)">
+      <change afterPath="$PROJECT_DIR$/extensions/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extensions/dsc/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extensions/dsc/tools.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extensions/generation/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extensions/generation/tools.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extensions/generation/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/read_logs.py" beforeDir="false" afterPath="$PROJECT_DIR$/commands/read_logs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dsc/commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/dsc/commands.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dsc/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/dsc/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dsc/commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/extensions/dsc/commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dsc/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/extensions/dsc/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dsc/locale_us.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/extensions/dsc/locale_us.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dsc/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/extensions/dsc/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generation/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/extensions/generation/core.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/global_variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/global_variables.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/removalScheduler/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/removalScheduler/core.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,8 +51,10 @@
   "keyToString": {
     "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python.core.executor": "Debug",
     "Python.init.executor": "Debug",
     "Python.main.executor": "Run",
+    "Python.utils.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -60,11 +71,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\Python\discordWaifu\extensions\generation2" />
+      <recent name="D:\Projects\Python\discordWaifu\extensions\dsc2" />
       <recent name="D:\Projects\Python\discordWaifu" />
+      <recent name="D:\Projects\Python\discordWaifu\extensions" />
       <recent name="D:\Projects\Python\discordWaifu\main" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.init">
     <configuration name="init" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="discordWaifu" />
       <option name="ENV_FILES" value="" />
@@ -87,6 +101,33 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="discordWaifu" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/extensions/generation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/extensions/generation/utils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.utils" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -120,7 +161,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741903767163</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="v0.2&#10;Seperated commands by their category of usage&#10;Made core use locale language files&#10;String getting is seperated into a yaml file (dynamically reloaded)&#10;Seperated discord utilities to a new discord utils file (discord module)">
+      <option name="closed" value="true" />
+      <created>1742066051118</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1742066051118</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,17 +186,19 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="v0.0&#10;basic setup&#10;- expandable command setup&#10;- process distribution" />
     <MESSAGE value="v0.1&#10;added more core modules like: discord, generation&#10;extended discord module&#10;added removal scheduler&#10;global variables now are stored in outside py file&#10;added loggers with log deletion ability&#10;added new exceptions&#10;changed structure a bit" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.1&#10;added more core modules like: discord, generation&#10;extended discord module&#10;added removal scheduler&#10;global variables now are stored in outside py file&#10;added loggers with log deletion ability&#10;added new exceptions&#10;changed structure a bit" />
+    <MESSAGE value="v0.2&#10;Seperated commands by their category of usage&#10;Made core use locale language files&#10;String getting is seperated into a yaml file (dynamically reloaded)&#10;Seperated discord utilities to a new discord utils file (discord module)" />
+    <option name="LAST_COMMIT_MESSAGE" value="v0.2&#10;Seperated commands by their category of usage&#10;Made core use locale language files&#10;String getting is seperated into a yaml file (dynamically reloaded)&#10;Seperated discord utilities to a new discord utils file (discord module)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/commands/clear_logs.py</url>
-          <line>6</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnlyOnFirst="true" notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+            <option name="notifyOnlyOnFirst" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>

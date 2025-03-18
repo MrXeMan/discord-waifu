@@ -1,6 +1,6 @@
-import asyncio
 import os.path
 import threading
+
 from main import utils
 
 
@@ -10,8 +10,9 @@ class DeletionReason:
 
 
 class Core(utils.Core):
+    core_name = "scheduler"
     def __init__(self, terminate_signal: threading.Event):
-        super().__init__(terminate_signal, "scheduler")
+        super().__init__(terminate_signal)
         self.__schedule: list[tuple[str, DeletionReason | str]] = []  # List of files to delete, contains pairs of: file, cause of deletion
         self.__loop_count = 0  # loop count
         self.__locked = False
@@ -48,7 +49,7 @@ class Core(utils.Core):
         """
         Gets all .deleted files from every directory.
         """
-        for curdir, subfolders, files in os.walk("."):
+        for curdir, subfolders, files in os.walk(""):
             for file in files:
                 if file.endswith(".deleted"):
                     self.delete_file(os.path.join(curdir, file), DeletionReason.AUTOMATIC, no_rename=True)
